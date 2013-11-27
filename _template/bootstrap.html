@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{.Title}} | {{.Config.SiteName}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="/_static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/_static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/_static/bootstrap/css/docs.css" rel="stylesheet">
+    <style type="text/css">
+      .contents h2 {
+        padding-bottom: 9px;
+        margin: 20px 0 30px;
+        border-bottom: 1px solid #eeeeee;
+      }
+    </style>
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar" data-offset="45">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="{{.Config.MainUrl}}">{{.Config.ShortSiteName}}</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              {{range $key, $value := .Config.Nav}}
+                <li class="">
+                  <a href="{{$value}}">{{$key}}</a>
+                </li>
+              {{end}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header class="jumbotron subhead" id="overview">
+      <div class="container">
+        <h1>{{.Title}}</h1>
+        <p class="lead"></p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <div id="faketoc" style="display: none">
+          {{.Toc}}
+        </div>
+        <div class="span3 bs-docs-sidebar">
+        </div>
+        <div class="span9 contents">
+          {{.Content}}
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="row"><p class="pull-right"><a href="#">Back to top</a></p></div>
+      <div class="container">
+        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+        <p>Modified by Lau Ching Jun.</p>
+        <p>Powered by Mdoc.</p>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/_static/jquery-1.8.3.js"></script>
+    <script type="text/javascript">
+        $('#faketoc > ul > li > ul > li > ul').remove();
+        $('#faketoc > ul > li > ul').appendTo('.bs-docs-sidebar');
+        $(".bs-docs-sidebar > ul").addClass("nav nav-list bs-docs-sidenav");
+        $(function(){
+          $window = $(window);
+          $('.bs-docs-sidenav').affix({
+            offset: {
+            top: function () { return $window.width() <= 980 ? 290 : 210 }
+              , bottom: 270
+            }
+          })
+        });
+        $html_body = $('html, body');
+        $('.bs-docs-sidebar a').click(function(){
+            $html_body.animate({
+                scrollTop: $( $(this).attr('href') ).offset().top - 45
+            }, 500);
+            return false;
+        });
+    </script>
+    <script src="/_static/bootstrap/js/bootstrap.js"></script>
+  </body>
+</html>
+

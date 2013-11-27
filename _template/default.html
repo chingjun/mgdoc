@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>{{.Title}} | {{.Config.SiteName}}</title>
+    <link rel="stylesheet" href="/_static/basic.css" type="text/css" />
+    <link rel="top" title="{{.Config.SiteName}}" href="#" /> 
+  </head>
+  <body>
+    <div class="relbar-top">
+        
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="{{.Config.MainUrl}}">{{.Config.SiteName}}</a> &raquo; </li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <h1>{{.Title}}</h1>
+            {{.Content}}
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+          <h3><a href="#">Table Of Contents</a></h3>
+          {{.Toc}}
+          <h3>This Page</h3>
+          <ul class="this-page-menu">
+            <li><a href="{{.SourceLink}}" rel="nofollow">Show Source</a></li>
+            <li><a href="{{.EditLink}}" rel="nofollow">Edit page</a></li>
+          </ul>
+          <!--{if isset($search)}
+            <div id="searchbox" style="">
+              <h3>Search</h3>
+                <form class="search" action="{.Config.Custom.SearchLink}}" method="get">
+                  <input type="text" name="{.Config.Custom.SearchQuery}}" size="18">
+                  <input type="submit" value="Go">
+                </form>
+            </div>
+          {/if}-->
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="relbar-bottom">
+      <div class="related">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="{{.Config.MainUrl}}">{{.Config.SiteName}}</a> &raquo; </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+        Created by Lau Ching Jun. Powered by Mgdoc.
+    </div>
+  </body>
+</html>

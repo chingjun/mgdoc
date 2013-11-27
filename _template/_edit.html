@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Editor</title>
+  </head>
+  <body>
+    <div id="epiceditor" style="top: 0; left: 0; position: fixed; width: 100%; height: 100%;"></div>
+    <script src="/_static/js-yaml.js"></script>
+    <script src="/_static/jquery-1.8.3.js"></script>
+    <script src="/_static/js-markdown-extra.js"></script>
+    <script src="/_static/epiceditor/js/epiceditor.js"></script>
+    <script type="text/javascript">
+      var editor = null;
+      var data = '';
+      var saved = false;
+      var parseMd = function(data) {
+        var sepIndex = data.indexOf('---');
+        if (sepIndex < 0) {
+          return '';
+        }
+        var yaml = jsyaml.load(data.substr(0, sepIndex));
+        return '<div class="body"><h1>'+yaml.Title+'</h1>'+Markdown(data.substr(sepIndex+3)) + '</div>';
+      }
+      var setcontent = function(data) {
+        var opt = {
+          theme:{preview:'../../../_static/basic.css'},
+          focusOnLoad: true,
+          basePath: '/_static/epiceditor',
+          clientSideStorage: false,
+          file: {defaultContent: data},
+          parser: parseMd,
+          userButton: {
+            visible: true,
+            callback: function() {
+              data = this.exportFile();
+              $.ajax({
+                url: document.location.origin+document.location.pathname + '?post=1',
+                type: 'POST',
+                data: {content: data},
+                cache: false,
+              }).done(function(data) {
+                if (data == "1") {
+                  saved = true;
+                  document.location = document.location.origin + document.location.pathname;
+                } else {
+                  alert(data);
+                }
+              });
+            },
+          }
+        };
+        editor = new EpicEditor(opt).load();
+      };
+      $(function() {
+        $.ajax({
+          url: document.location.origin+document.location.pathname + ".md",
+          statusCode: {404: function(){setcontent("");}},
+          cache: false,
+        }).done(setcontent);
+      });
+      window.onbeforeunload = function() {
+        if (!saved)
+          return "If you do not save this page, your work will be lost when you leave.";
+      }
+    </script>
+  </body>
+</html>
+
